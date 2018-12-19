@@ -77,6 +77,7 @@ Modules.registerModule("ForumMessagesUpdater", function () {
 				
 				// Сообщение юзера если в нем произошли изменения.
 				if ($("#forum-topicMsgShtuff", $(msg))[0].innerHTML !== $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML) {
+					if($("#message_edit_form", $(msg))[0] !== undefined) return;
 					console.log("Обнаружено изменение сообщения "  + PageAPI.getMessageInfo(msg).username);
 					$("#forum-topicMsgShtuff", $(msg))[0].innerHTML = $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML;
 				}

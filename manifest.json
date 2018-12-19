@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "RuMine++",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Приколюхи для румайна и его форума.",
     "icons": {"128": "icon.png"},
     "content_scripts": [
