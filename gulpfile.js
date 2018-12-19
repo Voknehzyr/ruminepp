@@ -4,14 +4,15 @@ const BUILD = "./build/";
 
 const VERSION = require("./package.json").version;
 
-const gulp = require("gulp");
+const gulp = require("gulp"),
+	  watch = require('gulp-watch');
 const zip = require("gulp-zip");
 const concat = require("gulp-concat");
 
 gulp.task("scripts", function() {
 	return gulp.src(SRC)
 		.pipe(concat("content.js"))
-		.pipe(gulp.dest(BUILD));
+		.pipe(gulp.dest(BUILD)); 
 });
 
 gulp.task("html", function() {

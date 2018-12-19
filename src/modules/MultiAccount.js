@@ -51,7 +51,7 @@ Modules.registerModule("MultiAccount", function() {
 
 	window.addMultiaccount = function() {
 		let page = "<div style='display: block; vertical-align: middle; border-bottom: solid #ddd 2px;'>";
-		page += "<img style='vertical-align: middle;' src='https://ru-minecraft.ru/templates/ru-minecraft/images/alert.png' />";
+		page += "<img style='vertical-align: middle;' src='https://ru-minecraft.ru/templates/new2/images/alert.png' />";
 		page += "<span style='vertical-align: middle;'>Пароли хранятся локально без какого либо шифрования</span><br>";
 		page += "</div><br>";
 

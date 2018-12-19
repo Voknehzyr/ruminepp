@@ -1,4 +1,4 @@
-Modules.registerModule("ForumMessagesUpdater", function() {
+Modules.registerModule("ForumMessagesUpdater", function () {
 	if (!PageAPI.isForumTopic()) return;
 
 	Notification.requestPermission();
@@ -8,7 +8,7 @@ Modules.registerModule("ForumMessagesUpdater", function() {
 
 	function getNewMessages(cb) {
 		$.ajax({
-			success: function(content) {
+			success: function (content) {
 				cb({
 					messages: PageAPI.getForumMessages(content),
 					page: PageAPI.getForumPage(content)
@@ -20,9 +20,9 @@ Modules.registerModule("ForumMessagesUpdater", function() {
 	function tick() {
 		const current = PageAPI.getForumMessages();
 
-		getNewMessages(function(actual) {
+		getNewMessages(function (actual) {
 			if (current.length !== actual.messages.length) {
-				actual.messages.slice(current.length).forEach(function(msg) {
+				actual.messages.slice(current.length).forEach(function (msg) {
 					PageAPI.appendForumMessage(msg);
 
 					const info = PageAPI.getMessageInfo(msg);
@@ -32,19 +32,21 @@ Modules.registerModule("ForumMessagesUpdater", function() {
 						icon: info.avatar
 					});
 
-					setTimeout(() => notification.close(), 3000);
+					setTimeout(() => notification.close(), 6000);
 				});
 			}
 
-			current.forEach(function(c, i) {
+			current.forEach(function (c, i) {
+				// console.log(actual.messages[i].innerHTML);
 				if (c.getAttribute("id").endsWith(editing)) return;
 
-				if ($(".EditMsgView", $(c)).text() !== $(".EditMsgView", $(actual.messages[i])).text()) {
+				if ($(".addMsgForm", $(c)).text() !== $(".addMsgForm", $(actual.messages[i])).text()) {
 					if (window._pushHistory) {
 						window._pushHistory(actual.messages[i]);
 						PageAPI.appendHistoryBtn(actual.messages[i]);
 					}
 
+					
 					$("#" + c.getAttribute("id")).html(actual.messages[i].innerHTML);
 				}
 			});
@@ -53,7 +55,7 @@ Modules.registerModule("ForumMessagesUpdater", function() {
 				currentPage = actual.page;
 
 				PageAPI.popup("Опа!", "Появилась новая страница!", {
-					"Перейти": function() {
+					"Перейти": function () {
 						window.location.href = window.location.href.replace("page-" + (actual.page - 1), "page-" + actual.page);
 					}
 				});
@@ -64,10 +66,27 @@ Modules.registerModule("ForumMessagesUpdater", function() {
 			}
 
 			if (currentPage === null) currentPage = actual.page;
+
+			current.forEach(function (msg, i) {
+
+				// Обновляем карточку юзера если в ней устарела информация.
+				if ($(".forum-topicMsgUser", $(msg))[0].innerHTML !== $(".forum-topicMsgUser", $(actual.messages[i]))[0].innerHTML) {
+					console.log("Обнаружено изменение профиля " + PageAPI.getMessageInfo(msg).username);
+					$(".forum-topicMsgUser", $(msg))[0].innerHTML = $(".forum-topicMsgUser", $(actual.messages[i]))[0].innerHTML;
+				}
+				
+				// Сообщение юзера если в нем произошли изменения.
+				if ($("#forum-topicMsgShtuff", $(msg))[0].innerHTML !== $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML) {
+					console.log("Обнаружено изменение сообщения "  + PageAPI.getMessageInfo(msg).username);
+					$("#forum-topicMsgShtuff", $(msg))[0].innerHTML = $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML;
+				}
+					
+				});
+
 		});
 	}
 
-	setInterval(() => tick(), 2000);
+	var pageUpdateInteval = setInterval(() => tick(), 2000);
 
 	// Inject
 	window.MsgEdit = Injector.before(window.MsgEdit, (id) => editing = id);
@@ -75,46 +94,46 @@ Modules.registerModule("ForumMessagesUpdater", function() {
 	window.MsgEditCancel = Injector.before(window.MsgEditCancel, () => editing = null);
 
 	// Redefine default functions
-	window.doAddMessage = function() {
-	    var a = document.getElementById("message_add_form");
-	    if (a.text_msg.value == "") {
-	        Alert_popup(lang[0][29][6], lang[0][23][0]);
-	        return false
-	    }
-	    if (a.recaptcha_response_field) {
-	        var b = Recaptcha.get_response();
-	        var c = Recaptcha.get_challenge()
-	    } else if (a.question) {
-	        var b = a.question.value;
-	        var c = a.question_sec.value
-	    } else {
-	        var b = "";
-	        var c = ""
-	    }
-	    Ajax_Loading("");
-	    var d = new Array;
-	    $("#message_add_form input[class='marker_file_ajax']").each(function(a, b) {
-	        d.push($(b).val())
-	    });
-	    if (forum_cpu) {
-	        var e = dle_root + forum_path + "/add/" + a.topict_id.value + "/post"
-	    } else {
-	        var e = dle_root + "index.php?do=" + forum_path + "&action=newpost&id=" + a.topict_id.value + "&param=post"
-	    }
-	    $.post(e, {
-	        text_msg: a.text_msg.value,
-	        topic_id: a.topict_id.value,
-	        recaptcha_response_field: b,
-	        recaptcha_challenge_field: c,
-	        id_file: d
-	    }, function(b) {
-	        Ajax_close("");
-	        if (b.param == 0) {
-	            Alert_popup(b.data, lang[0][23][0]);
-	            return false
-	        } 
-	        setElementForum()
-	        $("#text_msg").val("");
-	    }, "json");
+	window.doAddMessage = function () {
+		var a = document.getElementById("message_add_form");
+		if (a.text_msg.value == "") {
+			Alert_popup(lang[0][29][6], lang[0][23][0]);
+			return false
+		}
+		if (a.recaptcha_response_field) {
+			var b = Recaptcha.get_response();
+			var c = Recaptcha.get_challenge()
+		} else if (a.question) {
+			var b = a.question.value;
+			var c = a.question_sec.value
+		} else {
+			var b = "";
+			var c = ""
+		}
+		Ajax_Loading("");
+		var d = new Array;
+		$("#message_add_form input[class='marker_file_ajax']").each(function (a, b) {
+			d.push($(b).val())
+		});
+		if (forum_cpu) {
+			var e = dle_root + forum_path + "/add/" + a.topict_id.value + "/post"
+		} else {
+			var e = dle_root + "index.php?do=" + forum_path + "&action=newpost&id=" + a.topict_id.value + "&param=post"
+		}
+		$.post(e, {
+			text_msg: a.text_msg.value,
+			topic_id: a.topict_id.value,
+			recaptcha_response_field: b,
+			recaptcha_challenge_field: c,
+			id_file: d
+		}, function (b) {
+			Ajax_close("");
+			if (b.param == 0) {
+				Alert_popup(b.data, lang[0][23][0]);
+				return false
+			}
+			setElementForum()
+			$("#text_msg").val("");
+		}, "json");
 	}
 });

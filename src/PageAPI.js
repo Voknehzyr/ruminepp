@@ -1,6 +1,6 @@
 const PageAPI = {
 	getForumMessages: function(content) {
-		return Array.from($("li.msg", content ? $(content) : undefined)).slice(0, -1);
+		return Array.from($("div.forum-topicMsgCont", content ? $(content) : undefined)).slice(0, -1);
 	},
 	getForumPage: function(content) {
 		try {
@@ -10,6 +10,7 @@ const PageAPI = {
 		}
 	},
 	appendForumMessage: function(el) {
+		console.log("Inserting new message...");
 		$(".contentBoxTopicMessageList")[0].insertBefore(el, document.getElementById("addNewMsg"));
 	},
 	appendHistoryBtn: function(msg) {
@@ -20,9 +21,9 @@ const PageAPI = {
 			editHistory(PageAPI.getMessageId(msg));
 			return false;
 		}
-		el.innerHTML = "История редактирования";
+		el.innerHTML = `<i class="fa fa-book "></i> История`;
 
-		let msgEl = $(".msgIControl", $(msg))[0];
+		let msgEl = $(".forum-topicMsgDate p", $(msg))[1];
 
 		if (!msgEl) return;
 
@@ -32,8 +33,8 @@ const PageAPI = {
 		return window.location.href.startsWith("https://ru-minecraft.ru/forum/showtopic-");
 	},
 	getMessageInfo: function(msg) {
-		const username = $(".autorInfo > p > a", $(msg))[0].innerHTML;
-		const avatar = $(".avatar > a > img", $(msg))[0].src;
+		const username = $(".forum-topicMsgUser > .forum-topicMsgStat > .forum-topicMsgOnOff > h4 > a", $(msg))[0].innerHTML;
+		const avatar = $(".forum-topicMsgPict > a > img", $(msg))[0].src;
 		const text = $("div[id^='MsgTextBox-']", $(msg))[0].innerText;
 
 		return {

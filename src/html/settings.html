@@ -12,50 +12,53 @@
         padding: 0 30px;
     }
     hr {
-        border: 2px dashed #82c3f3;
+        border: 2px dashed #2a9591;
     }
     input {
         opacity: 0;
         z-index: -999;
     }
     label {
+        font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
     display: inline-block;
     text-align: left;
     cursor: pointer;
-    font-weight: 500;
-    padding: 0 0 0 30px;
+    font-weight: 600;
+    padding: 0 0 0 26px;
     height: 20px;
-    width: 300px;
+    top: 6px;
+    font-size: 13px;
+    /* width: 300px; */
     float: left;
     }
     .true_checkbox {
 	width: 15px;
     height: 15px;
     position: relative;
-    border: 3px solid #71a9d2;
-    border-radius: 5px;
+    border: 1px solid #2a9591;
     margin: -21px 0px;
     transition: border ease .4s;
     overflow: hidden;
     cursor: pointer;
+    outline: none;
 }
     .fill {
     display: block;
     position: absolute;
     width: 35px;
     height: 35px;
-    background: #9bd4ff;
+    background: #2a9591;
     margin: 15px 0 0 -30px;
     transform: rotate(45deg);
     transition: margin ease .5s;
 }
     input:not(checked) + .true_checkbox {
-        border: 1.5px solid rgba(113, 169, 210, 0.3);
+        border: 1px solid rgba(113, 169, 210, 0.3);
     }
     
     input:checked + .true_checkbox {
-        border: 3px solid #71a9d2;
+        border: 1px solid #196967;
     }
     
     input:not(checked) + .true_checkbox > .fill {
@@ -67,6 +70,8 @@
     }
     
     .more {
+        top: 3px;
+        margin-left: 10px;
         text-decoration: none;
         color: #71a9d2;
         font-size: 10px;
@@ -89,36 +94,56 @@
         border: 1px dashed #71a9d2;
     }
     
-    .CustomEmoticons {
-        width: 155px;
-    }
-    
     #CustomEmoticons_urls {
         outline: none;
     }
 </style>
 
-<img src="https://i.imgur.com/F9dywXu.png" class="ruminepp_logo"><br>
+<img src="https://ru-minecraft.ru/templates/new2/images/topmenunew.png" class="ruminepp_logo"><br>
 <hr style="border: 0.5px solid #91cdcf; width: 100%">
-<span style="display: block; font-family: 'Segoe UI', 'Arial', sans-serif; font-size: 14px; user-select: none; background: url(https://i.imgur.com/ddIqSYY.png) repeat fixed center center"><div id="checkboxes"><br><input class="rmppSetting" type="checkbox" id="RuMinePP"><div class="true_checkbox"><span class="fill"></span></div><label for="RuMinePP">Включить RuMine++ (не убирать)</label>
-<br><br>
-<input class="rmppSetting" type="checkbox" id="ReleaseChecker"><div class="true_checkbox"><span class="fill"></span></div><label for="ReleaseChecker">Проверять наличие новых релизов</label>
-<br><br>
-<input class="rmppSetting" type="checkbox" id="ForumMessagesUpdater"><div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessagesUpdater">Автообновление сообщений на форуме</label>
-<br><br>
-<input class="rmppSetting" type="checkbox" id="ForumMessageHistory"><div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessageHistory" style="width: 330px; font-size: 13px">Сохранять историю редактирования сообщений</label>
-<br><br>
-<input class="rmppSetting" type="checkbox" id="CustomEmoticons"><div class="true_checkbox"><span class="fill"></span></div><label for="CustomEmoticons" class="CustomEmoticons">Кастомные эмотиконы</label><a href="javascript:ShowOrHide('spoiler')" class="more">&#9660;</a>
-<div id="spoiler"><br><textarea id="CustomEmoticons_urls" style="height: 30px; width: 450px; resize: none" placeholder="Ссылки на картинки для эмотиконов (с новой строки)"></textarea></div>
-</div><br></span>
+<span style="display: block; font-family: 'Segoe UI', 'Arial', sans-serif; font-size: 14px; user-select: none; background: url(https://i.imgur.com/ddIqSYY.png) repeat fixed center center">
+    <!-- <div id="checkboxes"><br><input class="rmppSetting" type="checkbox" id="RuMinePP">
+        <div class="true_checkbox"><span class="fill"></span></div><label for="RuMinePP">Включить RuMine++ (не убирать)</label> -->
+        <!-- <br><br>
+        <input class="rmppSetting" type="checkbox" id="ReleaseChecker">
+        <div class="true_checkbox"><span class="fill"></span></div><label for="ReleaseChecker">Проверять наличие новых
+            релизов</label> -->
+        <input class="rmppSetting" type="checkbox" id="ForumMessagesUpdater">
+        <div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessagesUpdater">Автообновление
+            сообщений на форуме</label>
+        <br><br>
+        <input class="rmppSetting" type="checkbox" id="ForumMessageHistory">
+        <div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessageHistory" style="width: 330px; font-size: 13px">Сохранять
+            историю редактирования сообщений</label>
+        <br><br>
+        <input class="rmppSetting" type="checkbox" id="CustomEmoticons">
+        <div class="true_checkbox"><span class="fill"></span></div><label for="CustomEmoticons" class="CustomEmoticons">Кастомные
+            эмотиконы</label><a href="javascript:ShowOrHide('spoiler')" class="more">&#9660;</a>
+        <div id="spoiler"><br><textarea id="CustomEmoticons_urls" style="height: 30px; width: 450px; resize: none"
+                placeholder="Ссылки на картинки для эмотиконов (с новой строки)"></textarea></div>
+    </div><br>
+</span>
 <script type="text/javascript">
-$('#CustomEmoticons').click(function() {
-    if( $(this).is(':checked')) {
-        $(".more").css({"opacity": "1", "visibility": "visible"});
-        $("#spoiler").css({"opacity": "1", "display": "none"});
-    } else {
-        $(".more").css({"opacity": "0", "visibility": "hidden"});
-        $("#spoiler").css({"opacity": "1", "display": "none"});
-    }
-}); 
+    $('#CustomEmoticons').click(function () {
+        if ($(this).is(':checked')) {
+            $(".more").css({
+                "opacity": "1",
+                "visibility": "visible"
+            });
+            $("#spoiler").css({
+                "opacity": "1",
+                "display": "none"
+            });
+        } else {
+            $(".more").css({
+                "opacity": "0",
+                "visibility": "hidden"
+            });
+            $("#spoiler").css({
+                "opacity": "1",
+                "display": "none"
+            });
+        }
+    });
+
 </script>

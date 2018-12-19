@@ -8,7 +8,7 @@ const Modules = {
 
 		if (localStorage.getItem("_logout") === "do") {
 			document.write("Вхожу в аккаунт...");
-			localStorage.setItem("_logout", "refresh");
+			localStorage.setItem("_logout", "refresh"); 
 			return setTimeout(() => window.location.href = "https://ru-minecraft.ru/", 1000);
 		}
 
@@ -18,14 +18,14 @@ const Modules = {
 			return window.loginMultiaccount();
 		}
 
-		if (!$(".loginset")[1]) return;
+		if (document.getElementById('login_password')) return;
 		if (window.location.href.startsWith("https://ru-minecraft.ru/out?")) return;
 
 		try {
 			Notification.requestPermission();
 
 			Modules._modules.forEach(function(m) {
-				console.log(m.name + " enabled? " + (localStorage.getItem(m.name + "_enabled") !== "0"));
+				Utils.debug(`Состояние модуля ${m.name}: ${localStorage.getItem(m.name + "_enabled") !== "0"}`);
 				if (localStorage.getItem(m.name + "_enabled") !== "0") m.fn();
 			});
 		} catch (e) {
