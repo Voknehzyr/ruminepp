@@ -1,5 +1,7 @@
 Modules.registerModule("RuMinePP", function() {
 	const container = $(".topmenu-profile ul")[0];
+	if(container === undefined) return;
+
 	let rmppSettingsLi = document.createElement("li");
 	let rmppSettings = document.createElement("a");
 
@@ -20,8 +22,8 @@ Modules.registerModule("RuMinePP", function() {
 		Array.from($(".rmppSetting")).forEach(e => e.checked = localStorage.getItem(e.getAttribute("id") + "_enabled") !== "0");
 
 		return false;
-	}
-	rmppSettings.style.color = '#37cccf';
+	} 
+	rmppSettings.style.color = '#f9a535';
 	rmppSettings.innerHTML = "Настройки RuMine++";
 
 	container.appendChild(rmppSettingsLi);

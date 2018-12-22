@@ -1,24 +1,23 @@
 <style>
     .ruminepp_logo {
-        width: 30%;
+        width: 10%;
         position: relative;
         display: block;
-        margin: 0 auto;
+        margin: 10px auto;
         top: 5px;
-        opacity: 0.5;
     }
     #checkboxes {
         width: 100%;
         padding: 0 30px;
     }
     hr {
-        border: 2px dashed #2a9591;
+        border: 2px dashed #ff8300;
     }
-    input {
+    .ruminepp input {
         opacity: 0;
         z-index: -999;
     }
-    label {
+    .ruminepp label {
         font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
     display: inline-block;
@@ -36,51 +35,60 @@
 	width: 15px;
     height: 15px;
     position: relative;
-    border: 1px solid #2a9591;
+    border: 1px solid #ff8300;
     margin: -21px 0px;
     transition: border ease .4s;
     overflow: hidden;
     cursor: pointer;
     outline: none;
+    border-radius: 100%;
 }
     .fill {
+    border-radius: 100%;
     display: block;
     position: absolute;
-    width: 35px;
-    height: 35px;
-    background: #2a9591;
+    width: 22px;
+    height: 22px;
+    background: #230a00;
     margin: 15px 0 0 -30px;
     transform: rotate(45deg);
     transition: margin ease .5s;
 }
-    input:not(checked) + .true_checkbox {
-        border: 1px solid rgba(113, 169, 210, 0.3);
+    .ruminepp input:not(checked) + .true_checkbox {
+        border: 2px solid rgba(210, 171, 113, 0.3);
     }
     
-    input:checked + .true_checkbox {
-        border: 1px solid #196967;
+    .ruminepp input:checked + .true_checkbox {
+        border: 2px solid #ff8300;
     }
     
-    input:not(checked) + .true_checkbox > .fill {
+    .ruminepp input:not(checked) + .true_checkbox > .fill {
             margin: 15px 0 0 -30px;
     }
     
-    input:checked + .true_checkbox > .fill {
+    .ruminepp input:checked + .true_checkbox > .fill {
         margin: -7px;
+    }
+
+    .ruminepp .ui-widget-header {
+        font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: -2px;
+        border-radius: none;
     }
     
     .more {
+        position: relative;
         top: 3px;
         margin-left: 10px;
         text-decoration: none;
-        color: #71a9d2;
-        font-size: 10px;
+        color: #526d78;
+        font-size: 12px;
         transition: color ease .2s, visibility 0.5s, opacity 0.5s ease;
     }
     
     .more:hover {
         text-decoration: none;
-        color: #71a9d2;
+        color: #526d78;
     }
     
     #spoiler {
@@ -91,7 +99,7 @@
     }
     
     #spoiler textarea {
-        border: 1px dashed #71a9d2;
+        border: 1px dashed #526d78;
     }
     
     #CustomEmoticons_urls {
@@ -99,28 +107,27 @@
     }
 </style>
 
-<img src="https://ru-minecraft.ru/templates/new2/images/topmenunew.png" class="ruminepp_logo"><br>
-<hr style="border: 0.5px solid #91cdcf; width: 100%">
-<span style="display: block; font-family: 'Segoe UI', 'Arial', sans-serif; font-size: 14px; user-select: none; background: url(https://i.imgur.com/ddIqSYY.png) repeat fixed center center">
+<img src="https://i.imgur.com/hKweyAv.png" class="ruminepp_logo"><br>
+<span style="display: block; margin: 0 30px; font-family: 'Roboto', 'Segoe UI', 'Arial', sans-serif; font-size: 14px; user-select: none; background: url(https://i.imgur.com/ddIqSYY.png) repeat fixed center center">
     <!-- <div id="checkboxes"><br><input class="rmppSetting" type="checkbox" id="RuMinePP">
         <div class="true_checkbox"><span class="fill"></span></div><label for="RuMinePP">Включить RuMine++ (не убирать)</label> -->
-        <!-- <br><br>
-        <input class="rmppSetting" type="checkbox" id="ReleaseChecker">
+        <input class="rmppSetting ruminepp" type="checkbox" id="ReleaseChecker">
         <div class="true_checkbox"><span class="fill"></span></div><label for="ReleaseChecker">Проверять наличие новых
-            релизов</label> -->
-        <input class="rmppSetting" type="checkbox" id="ForumMessagesUpdater">
-        <div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessagesUpdater">Автообновление
-            сообщений на форуме</label>
-        <br><br>
-        <input class="rmppSetting" type="checkbox" id="ForumMessageHistory">
-        <div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessageHistory" style="width: 330px; font-size: 13px">Сохранять
-            историю редактирования сообщений</label>
-        <br><br>
-        <input class="rmppSetting" type="checkbox" id="CustomEmoticons">
-        <div class="true_checkbox"><span class="fill"></span></div><label for="CustomEmoticons" class="CustomEmoticons">Кастомные
-            эмотиконы</label><a href="javascript:ShowOrHide('spoiler')" class="more">&#9660;</a>
-        <div id="spoiler"><br><textarea id="CustomEmoticons_urls" style="height: 30px; width: 450px; resize: none"
-                placeholder="Ссылки на картинки для эмотиконов (с новой строки)"></textarea></div>
+            релизов</label>
+            <br><br>
+    <input class="rmppSetting ruminepp" type="checkbox" id="ForumMessagesUpdater">
+    <div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessagesUpdater">Автообновление
+        сообщений на форуме</label>
+    <br><br>
+    <input class="rmppSetting ruminepp" type="checkbox" id="ForumMessageHistory">
+    <div class="true_checkbox"><span class="fill"></span></div><label for="ForumMessageHistory" style="width: 330px; font-size: 13px">Сохранять
+        историю редактирования сообщений</label>
+    <br><br>
+    <input class="rmppSetting ruminepp" type="checkbox" id="CustomEmoticons">
+    <div class="true_checkbox"><span class="fill"></span></div><label for="CustomEmoticons" class="CustomEmoticons">Кастомные
+        эмотиконы</label><a href="javascript:ShowOrHide('spoiler')" class="more"><i class="fa fa-caret-down"></i></a>
+    <div id="spoiler"><br><textarea id="CustomEmoticons_urls" style="height: 30px; width: 450px; resize: none"
+            placeholder="Ссылки на картинки для эмотиконов (с новой строки)"></textarea></div>
     </div><br>
 </span>
 <script type="text/javascript">

@@ -28,6 +28,7 @@ function loadScript(path) {
 loadScript("build/content.js");
 
 let r = "";
+
 HTMLPages.forEach(function(p) {
     xhrGet(chrome.extension.getURL("build/html/" + HTMLPages), function(content) {
         r += "HTML.register('" + p + "',\"" + encodeURIComponent(content) + "\");"; 

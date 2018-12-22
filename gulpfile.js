@@ -4,8 +4,7 @@ const BUILD = "./build/";
 
 const VERSION = require("./package.json").version;
 
-const gulp = require("gulp"),
-	  watch = require('gulp-watch');
+const gulp = require("gulp");
 const zip = require("gulp-zip");
 const concat = require("gulp-concat");
 
@@ -23,6 +22,11 @@ gulp.task("zip", function() {
 	return gulp.src([BUILD + "content.js", "icon.png", "inject.js", "manifest.json", BUILD + "html/*.html"], { base: "." })
 		.pipe(zip("RuMinePP v" + VERSION + ".zip"))
 		.pipe(gulp.dest("./"));
+});
+
+gulp.task("watch", function() {
+	gulp.watch(SRC, ['scripts']);
+	gulp.watch(SRC_OTHER, ['html']);
 });
 
 gulp.task("default", ["scripts", "html"]);

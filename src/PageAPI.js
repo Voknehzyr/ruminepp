@@ -1,23 +1,24 @@
+
 const PageAPI = {
-	getForumMessages: function(content) {
+	getForumMessages: function (content) {
 		return Array.from($("div.forum-topicMsgCont", content ? $(content) : undefined)).slice(0, -1);
 	},
-	getForumPage: function(content) {
+	getForumPage: function (content) {
 		try {
 			return ~~$(".txt_info_pages", content ? $(content) : undefined)[1].innerHTML.split(" ").pop();
-		} catch(e) {
+		} catch (e) {
 			return 1;
 		}
 	},
-	appendForumMessage: function(el) {
+	appendForumMessage: function (el) {
 		console.log("Inserting new message...");
 		$(".contentBoxTopicMessageList")[0].insertBefore(el, document.getElementById("addNewMsg"));
 	},
-	appendHistoryBtn: function(msg) {
+	appendHistoryBtn: function (msg) {
 		let el = document.createElement("a");
 
 		el.href = "#";
-		el.onclick = function() {
+		el.onclick = function () {
 			editHistory(PageAPI.getMessageId(msg));
 			return false;
 		}
@@ -29,10 +30,10 @@ const PageAPI = {
 
 		msgEl.appendChild(el);
 	},
-	isForumTopic: function() {
+	isForumTopic: function () {
 		return window.location.href.startsWith("https://ru-minecraft.ru/forum/showtopic-");
 	},
-	getMessageInfo: function(msg) {
+	getMessageInfo: function (msg) {
 		const username = $(".forum-topicMsgUser > .forum-topicMsgStat > .forum-topicMsgOnOff > h4 > a", $(msg))[0].innerHTML;
 		const avatar = $(".forum-topicMsgPict > a > img", $(msg))[0].src;
 		const text = $("div[id^='MsgTextBox-']", $(msg))[0].innerText;
@@ -43,36 +44,36 @@ const PageAPI = {
 			text: text
 		}
 	},
-	getMessageId: function(msg) {
+	getMessageId: function (msg) {
 		let topic = window.location.href.slice("https://ru-minecraft.ru/forum/showtopic-".length);
 		topic = topic.slice(0, topic.indexOf("/"));
 		const msgId = $(".getMessageLinck", $(msg)).text().slice(1);
 		return topic + "_" + msgId;
 	},
-	getMessageHTML: function(msg) {
+	getMessageHTML: function (msg) {
 		let html = $("div[id^='MsgTextBox-']", $(msg)).html().trim();
 		return html.slice(0, html.indexOf('<div class="likeBox-'));
 	},
-	insertCustomEmoticon: function(url) {
+	insertCustomEmoticon: function (url) {
 		doInsert("[img]" + url + "[/img]\n\n", "", false);
 		$("#bullet_energy_emos").dialog("close");
 		window.ie_range_cache = null;
 	},
-	getOnline: function(content) {
+	getOnline: function (content) {
 		return Array.from(
-			$("span", 
+			$("span",
 				$(
 					$(".userClin", content ? $(content) : undefined)[0]
 				)
 			).not("[style='color:#9CA1A5']")
 		).map(e => e.innerText);
 	},
-	getUserInfo: function(username, cb) {
+	getUserInfo: function (username, cb) {
 		// TODO: implement other
 
-		$.ajax({ 
-			url: "https://ru-minecraft.ru/engine/ajax/profile.php?name=" + username + "&skin=ru-minecraft", 
-			success: function(content) {
+		$.ajax({
+			url: "https://ru-minecraft.ru/engine/ajax/profile.php?name=" + username + "&skin=ru-minecraft",
+			success: function (content) {
 				const e = $(content);
 
 				const avatar = $("img", e)[0].src;
@@ -80,10 +81,10 @@ const PageAPI = {
 				cb({
 					avatar: avatar
 				});
-			} 
+			}
 		});
 	},
-	login: function(login, password, cb) {
+	login: function (login, password, cb) {
 		$.ajax({
 			method: "POST",
 			url: "https://ru-minecraft.ru/",
@@ -92,10 +93,10 @@ const PageAPI = {
 				login_password: password,
 				login: "submit"
 			},
-			success: function(body, status, xhr) {
+			success: function (body, status, xhr) {
 				cb(true);
 			},
-			error: function() {
+			error: function () {
 				cb(false);
 			}
 		});
@@ -103,18 +104,20 @@ const PageAPI = {
 	popup: function (title, body, buttons, opts = {}) {
 		const st = Object.keys(opts).map(k => k + ": " + opts[k] + ";").join("");
 
-		body = "<div style='" + st + "overflow-y: auto; max-height: 320px; overflow-x: hidden;'>" + body;
+		body = `
+		<div style='` + st + `
+		'>` + body;
 
 		$("#dlepopup").remove();
 		$("body").append("<div id='dlepopup' title='" + title + "' style='display:none'>" + body + "</div></div>");
 		$('#dlepopup').dialog({
 			autoOpen: true,
 			width: 550,
-			dialogClass: "modalfixed",
+			dialogClass: "modalfixed ruminepp",
 			buttons: buttons
 		});
 	},
-	openWithPost: function(url, data) {
+	openWithPost: function (url, data) {
 		$("#Form").remove();
 
 		let form = document.createElement("form");
@@ -125,7 +128,7 @@ const PageAPI = {
 		form.setAttribute("action", url);
 		form.setAttribute("target", target);
 
-		Object.keys(data).forEach(function(key) {
+		Object.keys(data).forEach(function (key) {
 			let input = document.createElement("input");
 
 			input.setAttribute("type", "hidden");
