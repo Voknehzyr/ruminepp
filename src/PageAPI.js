@@ -36,7 +36,7 @@ const PageAPI = {
 	getMessageInfo: function (msg) {
 		const username = $(".forum-topicMsgUser > .forum-topicMsgStat > .forum-topicMsgOnOff > h4 > a", $(msg))[0].innerHTML;
 		const avatar = $(".forum-topicMsgPict > a > img", $(msg))[0].src;
-		const text = $("div[id^='MsgTextBox-']", $(msg))[0].innerText;
+		const text = $("div[id^='MsgTextBox-']", $(msg))[0].innerText.replace(/\s/g, '');
 
 		return {
 			username: username,

@@ -46,7 +46,7 @@ Modules.registerModule("ForumMessagesUpdater", function () {
 						PageAPI.appendHistoryBtn(actual.messages[i]);
 					}
 
-					
+
 					$("#" + c.getAttribute("id")).html(actual.messages[i].innerHTML);
 				}
 			});
@@ -70,19 +70,31 @@ Modules.registerModule("ForumMessagesUpdater", function () {
 			current.forEach(function (msg, i) {
 
 				// Обновляем карточку юзера если в ней устарела информация.
-				if ($(".forum-topicMsgUser", $(msg))[0].innerHTML !== $(".forum-topicMsgUser", $(actual.messages[i]))[0].innerHTML) {
+				if ($(".forum-topicMsgUser", $(msg))[0].innerText.replace(/\s/g, '') !== $(".forum-topicMsgUser", $(actual.messages[i]))[0].innerText.replace(/\s/g, '')) {
 					console.log("Обнаружено изменение профиля " + PageAPI.getMessageInfo(msg).username);
 					$(".forum-topicMsgUser", $(msg))[0].innerHTML = $(".forum-topicMsgUser", $(actual.messages[i]))[0].innerHTML;
 				}
-				
+
 				// Сообщение юзера если в нем произошли изменения.
 				if ($("#forum-topicMsgShtuff", $(msg))[0].innerHTML !== $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML) {
-					if($("#message_edit_form", $(msg))[0] !== undefined) return;
-					console.log("Обнаружено изменение сообщения "  + PageAPI.getMessageInfo(msg).username);
-					$("#forum-topicMsgShtuff", $(msg))[0].innerHTML = $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML;
-				}
+					if ($("#message_edit_form", $(msg))[0] !== undefined) return;
+					// Проверка на наличие изменений внутри текста.
+					if (PageAPI.getMessageInfo(msg).text == PageAPI.getMessageInfo(actual.messages[i]).text) return;
+
+					// Проверка на наличие открытого спойлера в сообщении.
+					let hasSpoilersOpened = false;
+					($("#forum-topicMsgShtuff", $(msg))[0].querySelectorAll('.text_spoiler')).forEach((spoiler) => {
+						if (spoiler.style.display !== "none") return hasSpoilersOpened = true;
+					})
+
+					// Не обновляем сообщение если открыты спойлеры.
+					if (hasSpoilersOpened) return;
 					
-				});
+					$("#forum-topicMsgShtuff", $(msg))[0].innerHTML = $("#forum-topicMsgShtuff", $(actual.messages[i]))[0].innerHTML;
+					Utils.debug("Обнаружено изменение сообщения " + PageAPI.getMessageInfo(msg).username);
+				}
+
+			});
 
 		});
 	}

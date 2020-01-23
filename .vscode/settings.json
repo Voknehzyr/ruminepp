@@ -1,0 +1,10 @@
+{
+    "workbench.colorCustomizations": {
+        "[Framer Syntax]": {
+            "menu.background": "#141414",
+            "menu.selectionBorder": "#ffffffa2",
+            "menu.separatorBackground": "#ffffff33"
+        },
+        "tab.unfocusedActiveBorder": "#fff0"
+    }
+}

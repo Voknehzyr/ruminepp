@@ -21,6 +21,8 @@ const Modules = {
 		if (document.getElementById('login_password')) return;
 		if (window.location.href.startsWith("https://ru-minecraft.ru/out?")) return;
 
+		if (!window.jQuery) return;
+
 		try {
 			Notification.requestPermission();
 
@@ -28,6 +30,7 @@ const Modules = {
 				Utils.debug(`Состояние модуля ${m.name}: ${localStorage.getItem(m.name + "_enabled") !== "0"}`);
 				if (localStorage.getItem(m.name + "_enabled") !== "0") m.fn();
 			});
+
 		} catch (e) {
 			document.write("<pre><center><h1>Невозможно инициализировать RuMine++</h1></center><br><br>");
 			document.write(e.stack + "");

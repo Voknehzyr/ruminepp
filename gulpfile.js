@@ -25,8 +25,6 @@ gulp.task("zip", function() {
 });
 
 gulp.task("watch", function() {
-	gulp.watch(SRC, ['scripts']);
-	gulp.watch(SRC_OTHER, ['html']);
+	gulp.watch(SRC, gulp.series('scripts'))
+	gulp.watch(SRC_OTHER, gulp.series('html'))
 });
-
-gulp.task("default", ["scripts", "html"]);
